@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackServerApp } from "../stack";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import SideBar from "@/components/SideBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,6 +14,10 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const dm = DM_Sans({
+  subsets: ["latin"]
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,10 +32,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      ><StackProvider app={stackServerApp}><StackTheme>
-        {children}
-      </StackTheme></StackProvider></body>
+        className={`${dm.className} antialiased`}
+      >
+        <StackProvider app={stackServerApp}>
+          <StackTheme>
+            <div className="flex items-center justify-between w-full">
+              <SideBar />
+              <div className="w-4/5">
+                {children}
+
+              </div>
+            </div>
+          </StackTheme>
+        </StackProvider>
+      </body>
     </html>
   );
 }
