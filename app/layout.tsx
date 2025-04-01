@@ -1,4 +1,3 @@
-import ClientLayout from "@/components/ClientLayout";
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
@@ -26,7 +25,7 @@ export default function RootLayout({
       >
         <StackProvider app={stackServerApp}>
           <StackTheme>
-            <ClientLayout>{children}</ClientLayout>
+            {children}
           </StackTheme>
         </StackProvider>
       </body>
