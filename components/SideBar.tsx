@@ -57,7 +57,7 @@ const SideBar = async () => {
 
                     <div className='h-12 flex items-center gap-4 cursor-pointer justify-center md:justify-start'>
                         <Avatar className='w-8 h-8 md:w-9 md:h-9'>
-                            <AvatarImage src={user?.profileImageUrl} alt="@shadcn" />
+                            <AvatarImage src={user?.profileImageUrl ?? "https://github.com/shadcn.png"} alt="@shadcn" />
                             <AvatarFallback>{user ? `Hello, ${user?.displayName ?? "anon"}` : 'You are not logged in'}</AvatarFallback>
                         </Avatar>
                         <div className='md:flex flex-col items-start hidden'>
