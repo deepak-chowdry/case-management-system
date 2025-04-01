@@ -1,14 +1,14 @@
-
+"use client"
 import { Button } from "@/components/ui/button"
-import { stackServerApp } from "@/stack"
+import { useUser } from "@stackframe/stack"
 import { BriefcaseBusiness, House, Plus, ScrollText, Users } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 
 
-const SideBar = async () => {
-    const user = await stackServerApp.getUser();
+const SideBar = () => {
+    const user = useUser();
     const links = [
         {
             label: "Home",
@@ -32,8 +32,8 @@ const SideBar = async () => {
         },
     ]
     return (
-        <div className='bg-amber-50/50 w-1/6 md:w-1/5 flex justify-center h-svh sticky shadow shadow-zinc-100'>
-            <div className='flex flex-col justify-between w-10/12 h-[96%]'>
+        <div className='bg-amber-50/50 w-1/6 md:w-1/5 flex justify-center h-screen sticky shadow shadow-zinc-100'>
+            <div className='flex flex-col justify-between w-10/12 h-svh pb-2'>
                 <div className='h-3/4 space-y-4'>
                     <div className='h-20 flex items-center justify-center md:justify-start w-full'>
                         <Image src={"/AJ_logo.png"} alt='' width={200} height={200} className='w-14 md:w-24' />
@@ -41,7 +41,7 @@ const SideBar = async () => {
                     <div className='w-full space-y-7 flex flex-col items-center'>
                         <div className="space-y-8 md:space-y-0 w-full">
                             {links.map((link) => (
-                                <Link key={link.label} href={link.route} className='flex flex-col md:flex-row items-center justify-center md:justify-start gap-2 md:gap-3.5 px-3 h-fit md:h-14'>
+                                <Link key={link.label} href={link.route} className='flex flex-col md:flex-row items-center justify-center md:justify-start gap-1.5 md:gap-3.5 px-3 h-fit md:h-14'>
                                     <link.icon strokeWidth={1.25} size={20} color='green' />
                                     <p className='text-xs md:text-sm'>{link.label}</p>
                                 </Link>
