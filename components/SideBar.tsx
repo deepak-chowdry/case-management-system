@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 
 
 const SideBar = () => {
-    const user = useUser({ or: "redirect" });
+    const user = useUser();
     const links = [
         {
             label: "Home",
