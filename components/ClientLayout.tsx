@@ -1,6 +1,6 @@
 "use client"
 import { usePathname } from 'next/navigation';
-import React, { ReactNode, Suspense } from 'react'
+import { ReactNode, Suspense } from 'react';
 import SideBar from './SideBar';
 
 interface ClientLayoutProps {

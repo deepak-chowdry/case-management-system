@@ -1,13 +1,9 @@
-import SideBar from "@/components/SideBar";
+import ClientLayout from "@/components/ClientLayout";
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import { stackServerApp } from "../stack";
 import "./globals.css";
-import { Suspense } from "react";
-import ClientLayout from "@/components/ClientLayout";
-
-
 
 const dm = DM_Sans({
   subsets: ["latin"]
