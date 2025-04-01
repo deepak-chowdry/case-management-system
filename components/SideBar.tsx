@@ -1,11 +1,10 @@
 
 import { Button } from "@/components/ui/button"
-import { useUser } from '@stackframe/stack'
+import { stackServerApp } from "@/stack"
 import { BriefcaseBusiness, House, Plus, ScrollText, Users } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { stackServerApp } from "@/stack"
 
 
 const SideBar = async () => {
