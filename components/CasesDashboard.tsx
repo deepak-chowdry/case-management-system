@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 const CasesDashboard = () => {
     const router = useRouter()
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen">
             <div className="flex-1 mx-auto">
                 <div className="space-y-6">
                     <div>
