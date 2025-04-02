@@ -1,9 +1,16 @@
+import UploadFile from '@/components/UploadFile'
 import Image from 'next/image'
 
 const DashboardPage = () => {
   return (
-    <div className='h-screen flex items-center justify-center'>
-      <Image src={"/AJ_logo.png"} alt='' width={200} height={200} />
+    <div className='min-h-screen flex justify-center'>
+      <div className='w-11/12 md:w-[98%] h-screen py-3'>
+        <div className=''>
+          <h2 className='text-xl font-medium'>Welcome to Dashboard</h2>
+        </div>
+        <UploadFile />
+
+      </div>
     </div>
   )
 }

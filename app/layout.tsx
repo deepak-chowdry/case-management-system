@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import { stackServerApp } from "../stack";
 import "./globals.css";
+import { EdgeStoreProvider } from "@/lib/edgestore";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const dm = DM_Sans({
   subsets: ["latin"]
@@ -23,12 +25,22 @@ export default function RootLayout({
       <body
         className={`${dm.className} antialiased`}
       >
-        <StackProvider app={stackServerApp}>
-          <StackTheme>
-            {children}
-          </StackTheme>
-        </StackProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <StackProvider app={stackServerApp}>
+            <>
+              <EdgeStoreProvider>
+
+                {children}
+              </EdgeStoreProvider>
+            </>
+          </StackProvider>
+        </ThemeProvider>
       </body>
-    </html>
+    </html >
   );
 }

@@ -1,3 +1,4 @@
+"use client"
 import { BriefcaseBusiness, ChevronUp, Home, ScrollText, Settings, Users } from "lucide-react"
 
 import {
@@ -15,34 +16,48 @@ import {
 import Image from "next/image"
 import Link from "next/link"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
+import { useTheme } from "next-themes"
+import { useState } from "react"
 
 // Menu items.
 const items = [
     {
         title: "Home",
-        url: "#",
+        url: "/dashboard/",
         icon: Home,
     },
     {
         title: "Cases",
-        url: "#",
+        url: "/dashboard/cases",
         icon: BriefcaseBusiness,
     },
     {
         title: "Team",
-        url: "#",
+        url: "/dashboard/team",
         icon: Users,
     },
     {
         title: "Billing",
-        url: "#",
+        url: "/dashboard/billing",
         icon: ScrollText,
     },
 ]
 
 export function AppSidebar() {
+    const { setTheme } = useTheme()
+    const [isDrak, setIsDrak] = useState(false)
+
+    const toggleTheme = () => {
+        if (isDrak) {
+            setTheme("light")
+        } else {
+            setTheme("dark")
+        }
+        setIsDrak(!isDrak)
+    }
+
     return (
-        <Sidebar collapsible="icon" className="bg-blue-50/30">
+        <Sidebar collapsible="icon" className="bg-sidebar">
             <SidebarHeader>
                 <Image src={"/AJ_logo.png"} className="w-24" alt="" width={200} height={200} />
             </SidebarHeader>
@@ -81,8 +96,12 @@ export function AppSidebar() {
                                 {/* <DropdownMenuItem>
                                     <span>Account</span>
                                 </DropdownMenuItem> */}
-                                <DropdownMenuItem>
-                                    <span>Dark mode</span>
+                                <DropdownMenuItem onClick={toggleTheme}>
+                                    {isDrak ?
+                                        <span>Light mode</span>
+                                        :
+                                        <span>Dark mode</span>
+                                    }
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <span>Sign out</span>
@@ -90,14 +109,8 @@ export function AppSidebar() {
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </SidebarMenuItem>
-                    <SidebarMenuItem className="flex justify-end">
-                        <SidebarMenuButton asChild className="w-fit">
-                            <SidebarTrigger />
-
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarFooter>
-        </Sidebar>
+        </Sidebar >
     )
 }

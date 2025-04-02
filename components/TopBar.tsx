@@ -1,14 +1,15 @@
 import { UserButton } from '@stackframe/stack'
 import SeacrhBox from './SeacrhBox'
+import { SidebarTrigger } from './ui/sidebar'
 
 const TopBar = () => {
     return (
-        <div className='flex items-center justify-center  w-full h-14 shadow-sm shadow-zinc-100 sticky top-0'>
-            <div className='w-11/12 flex items-center justify-between'>
+        <div className='flex items-center justify-center  w-full h-14 shadow-sm shadow-muted sticky top-0 bg-background'>
+            <div className='w-[97%] flex items-center justify-between'>
                 <div className='w-3/4 md:w-1/2'>
-                    <SeacrhBox />
+                    <SidebarTrigger />
                 </div>
-                <div className=''>
+                <div className='px-2'>
                     <UserButton />
                 </div>
             </div>
