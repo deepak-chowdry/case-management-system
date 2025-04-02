@@ -5,22 +5,21 @@ import CaseFile from './CaseFile'
 import CaseReview from './CaseReview'
 import { FormProgress } from './FormProgress'
 import { Card, CardContent, CardHeader } from './ui/card'
-// Define the form data structure
+
 export type FormData = {
     casename: string,
     casetype: string,
 }
 
-// Initial form data
-const initialFormData: FormData = {
-    casename: "",
-    casetype: "",
-}
+
 
 const CaseForm = () => {
     const [file, setFile] = React.useState<File | null>(null);
     const [currentStep, setCurrentStep] = useState(1)
-    const [formData, setFormData] = useState<FormData>(initialFormData)
+    const [formData, setFormData] = useState<FormData>({
+        casename: "",
+        casetype: "",
+    })
 
     const totalSteps = 3
 
@@ -46,11 +45,10 @@ const CaseForm = () => {
     // Handle form submission
     const handleSubmit = () => {
         console.log("Form submitted:", formData)
-        alert("Form submitted successfully!")
     }
     return (
-        <Card className='w-11/12 md:w-2xl md:min-w-2xl min-h-[60vh] flex flex-col justify-around'>
-            <CardHeader>
+        <Card className='w-11/12 md:w-2xl md:min-w-2xl min-h-[50vh] flex flex-col justify-around'>
+            <CardHeader className=''>
                 <FormProgress currentStep={currentStep} totalSteps={totalSteps} />
             </CardHeader>
             <CardContent>
@@ -61,18 +59,19 @@ const CaseForm = () => {
                         onNext={handleNext}
                     />
                 )}
+                {currentStep === 2 && (
+                    <CaseFile
+                        file={file}
+                        setFile={setFile}
+                        onNext={handleNext}
+                        onPrevious={handlePrevious}
+                    />
+                )}
+
+                {currentStep === 3 && <CaseReview formData={formData} file={file} onPrevious={handlePrevious} onSubmit={handleSubmit} />}
             </CardContent>
 
-            {currentStep === 2 && (
-                <CaseFile
-                    file={file}
-                    setFile={setFile}
-                    onNext={handleNext}
-                    onPrevious={handlePrevious}
-                />
-            )}
 
-            {currentStep === 3 && <CaseReview formData={formData} file={file} onPrevious={handlePrevious} onSubmit={handleSubmit} />}
         </Card>
     )
 }
