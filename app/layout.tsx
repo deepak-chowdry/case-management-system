@@ -1,10 +1,10 @@
-import { StackProvider, StackTheme } from "@stackframe/stack";
+import { ThemeProvider } from "@/components/theme-provider";
+import { EdgeStoreProvider } from "@/lib/edgestore";
+import { StackProvider } from "@stackframe/stack";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import { stackServerApp } from "../stack";
 import "./globals.css";
-import { EdgeStoreProvider } from "@/lib/edgestore";
-import { ThemeProvider } from "@/components/theme-provider";
 
 const dm = DM_Sans({
   subsets: ["latin"]

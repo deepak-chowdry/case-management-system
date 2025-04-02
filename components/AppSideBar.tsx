@@ -10,14 +10,13 @@ import {
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
-    SidebarMenuItem,
-    SidebarTrigger
+    SidebarMenuItem
 } from "@/components/ui/sidebar"
+import { useTheme } from "next-themes"
 import Image from "next/image"
 import Link from "next/link"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
-import { useTheme } from "next-themes"
 import { useState } from "react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
 
 // Menu items.
 const items = [

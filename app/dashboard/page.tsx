@@ -1,5 +1,4 @@
 import UploadFile from '@/components/UploadFile'
-import Image from 'next/image'
 
 const DashboardPage = () => {
   return (

@@ -1,5 +1,4 @@
 import { UserButton } from '@stackframe/stack'
-import SeacrhBox from './SeacrhBox'
 import { SidebarTrigger } from './ui/sidebar'
 
 const TopBar = () => {
