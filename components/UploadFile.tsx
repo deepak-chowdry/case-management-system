@@ -45,9 +45,9 @@ const UploadFile = () => {
 
         // You can run some server action or API here to add necessary data to your database
         console.log(res);
-      } catch (error: any) {
+      } catch (err) {
         // Handle errors
-        console.error("Upload failed:", error);
+        console.error("Upload failed:", err);
         setIsUploading(false);
       }
     }
