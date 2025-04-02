@@ -2,7 +2,6 @@
 import { useEdgeStore } from '@/lib/edgestore';
 import { Check, File } from 'lucide-react';
 import React, { useEffect } from 'react';
-import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 
 const UploadFile = () => {
