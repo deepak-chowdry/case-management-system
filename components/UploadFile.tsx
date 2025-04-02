@@ -2,6 +2,7 @@
 import { useEdgeStore } from '@/lib/edgestore';
 import { Check, File } from 'lucide-react';
 import React, { useEffect } from 'react';
+import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 
 const UploadFile = () => {
@@ -9,7 +10,6 @@ const UploadFile = () => {
   const [progress, setProgress] = React.useState<number>(0); // Track upload progress
   const [isUploading, setIsUploading] = React.useState<boolean>(false); // Track if the file is uploading
   const [isUploaded, setIsUploaded] = React.useState<boolean>(false); // Track if the file has been uploaded
-  const [abortController, setAbortController] = React.useState<AbortController | null>(null); // Controller to cancel the upload
   const { edgestore } = useEdgeStore();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,8 +29,6 @@ const UploadFile = () => {
 
   const handleUpload = async () => {
     if (file) {
-      const controller = new AbortController(); // Create a new abort controller for each upload
-      setAbortController(controller);
       setIsUploading(true); // Start the uploading process
 
       try {
@@ -40,7 +38,6 @@ const UploadFile = () => {
             // Update the progress bar
             setProgress(progress);
           },
-          signal: controller.signal, // Pass the abort signal to the upload function
         });
 
         // After the upload is complete, set the uploaded flag and stop the upload process
@@ -50,25 +47,12 @@ const UploadFile = () => {
         // You can run some server action or API here to add necessary data to your database
         console.log(res);
       } catch (error: any) {
-        if (error.name === "AbortError") {
-          // If the upload was aborted, just stop the process gracefully
-          console.log("Upload was canceled.");
-        } else {
-          // Handle other types of errors
-          console.error("Upload failed:", error);
-        }
+        // Handle errors
+        console.error("Upload failed:", error);
         setIsUploading(false);
       }
     }
   };
-
-  // const cancelUpload = () => {
-  //   if (abortController) {
-  //     abortController.abort(); // Abort the upload
-  //   }
-  //   setIsUploading(false);
-  //   setFile(null); // Reset the file input if canceled
-  // };
 
   return (
     <div className="w-full space-y-3">
@@ -89,7 +73,6 @@ const UploadFile = () => {
           <p className='text-sm'><span className='text-blue-400 font-medium'>Click here</span> to upload your file.</p>
         </label>
       </div>
-
 
       {file && (
         <div className='flex flex-col gap-2 items-center w-full border border-muted shadow-sm shadow-muted p-2 md:p-3 rounded-xl'>
@@ -138,19 +121,10 @@ const UploadFile = () => {
 
               {/* Display "Uploaded" once upload is completed */}
               {isUploaded && (
-                <button
-                  className='w-6'
-                >
+                <button className='w-6'>
                   <Check className="text-green-400 size-5" />
                 </button>
               )}
-
-              {/* // : (
-              //   <Button
-              //     className='rounded-full h-10 w-10' variant="outline" onClick={cancelUpload}>
-              //     <X />
-              //   </Button>
-              // ) */}
             </div>
           )}
 
