@@ -21,7 +21,6 @@ const CaseForm = () => {
     const [file, setFile] = React.useState<File | null>(null);
     const [currentStep, setCurrentStep] = useState(1)
     const [formData, setFormData] = useState<FormData>(initialFormData)
-    const [errors, setErrors] = useState<Record<string, string>>({})
 
     const totalSteps = 3
 
