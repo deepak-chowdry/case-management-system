@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { BriefcaseBusiness, ChevronDown, Search } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 const CasesDashboard = () => {
-
+    const router = useRouter()
     return (
         <div className="min-h-screen bg-white">
             <div className="flex-1 mx-auto">
@@ -27,7 +28,7 @@ const CasesDashboard = () => {
                                     <ChevronDown className="h-4 w-4" />
                                 </Button>
                             </div>
-                            <Button className="bg-black text-white hover:bg-gray-800 flex items-center gap-2">
+                            <Button onClick={() => router.push("/dashboard/newcase")} className="bg-black text-white hover:bg-gray-800 flex items-center gap-2 cursor-pointer">
                                 <BriefcaseBusiness className="h-4 w-4" strokeWidth={1.5} />
                                 <span className="hidden md:flex">
                                     New Case
@@ -52,7 +53,7 @@ const CasesDashboard = () => {
                                 </TableHeader>
                                 <TableBody>
                                     <TableRow>
-                                        <TableCell colSpan={3} className="h-[250px] text-center">
+                                        <TableCell onClick={() => router.push("/dashboard/newcase")} colSpan={3} className="h-[250px] text-center cursor-pointer">
                                             <div className="flex flex-col items-center justify-center h-full space-y-2">
                                                 <h2 className="text-xl font-semibold">Start Your Case Timeline Journey</h2>
                                                 <p className="text-gray-500 max-w-md text-center">
