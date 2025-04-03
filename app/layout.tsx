@@ -5,10 +5,12 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import { stackServerApp } from "../stack";
 import "./globals.css";
+import { ConvexClientProvider } from "@/components/ConvexClientProvider";
+import { Toaster } from "sonner";
 
 const dm = DM_Sans({
-  subsets: ["latin"]
-})
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "AskJunior CMS",
@@ -22,25 +24,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${dm.className} antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <StackProvider app={stackServerApp}>
-            <>
+      <body className={`${dm.className} antialiased`}>
+        <ConvexClientProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <StackProvider app={stackServerApp}>
               <EdgeStoreProvider>
-
                 {children}
+                <Toaster />
               </EdgeStoreProvider>
-            </>
-          </StackProvider>
-        </ThemeProvider>
+            </StackProvider>
+          </ThemeProvider>
+        </ConvexClientProvider>
       </body>
-    </html >
+    </html>
   );
 }

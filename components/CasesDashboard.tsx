@@ -1,78 +1,150 @@
-"use client"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { BriefcaseBusiness, ChevronDown, Search } from "lucide-react"
-import { useRouter } from "next/navigation"
+"use client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { api } from "@/convex/_generated/api";
+import { BriefcaseBusiness, ChevronDown, Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useQuery } from "convex/react";
 
 const CasesDashboard = () => {
-    const router = useRouter()
-    return (
-        <div className="min-h-screen">
-            <div className="flex-1 mx-auto">
-                <div className="space-y-6">
-                    <div>
-                        <h1 className="text-2xl font-bold">My Cases</h1>
-                        <p className="text-gray-500">You are all set to start your day.</p>
-                    </div>
+  const router = useRouter();
+  const cases = useQuery(api.cases.getAllCases);
+  return (
+    <div className="min-h-screen">
+      <div className="flex-1 mx-auto">
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-2xl font-bold">My Cases</h1>
+            <p className="text-gray-500">You are all set to start your day.</p>
+          </div>
 
-                    <div className="border rounded-xl p-3">
-                        <div className="flex gap-2 justify-between items-center mb-6">
-                            <div className="flex justify-between items-center w-10/12 md:w-fit md:gap-3">
-                                <div className="relative w-4/6 md:w-[280px]">
-                                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                                    <Input placeholder="Filter by case..." className="pl-9" />
-                                </div>
-                                <Button variant="outline" className="flex items-center gap-1">
-                                    Status
-                                    <ChevronDown className="h-4 w-4" />
-                                </Button>
-                            </div>
-                            <Button onClick={() => router.push("/dashboard/newcase")} className="bg-black text-white hover:bg-gray-800 flex items-center gap-2 cursor-pointer">
-                                <BriefcaseBusiness className="h-4 w-4" strokeWidth={1.5} />
-                                <span className="hidden md:flex">
-                                    New Case
-                                </span>
-                            </Button>
+          <div className="border rounded-xl p-3">
+            <div className="flex gap-2 justify-between items-center mb-6">
+              <div className="flex justify-between items-center w-10/12 md:w-fit md:gap-3">
+                <div className="relative w-4/6 md:w-[280px]">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Input placeholder="Filter by case..." className="pl-9" />
+                </div>
+                <Button variant="outline" className="flex items-center gap-1">
+                  Status
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </div>
+              <Button
+                onClick={() => router.push("/dashboard/newcase")}
+                className="bg-black text-white hover:bg-gray-800 flex items-center gap-2 cursor-pointer"
+              >
+                <BriefcaseBusiness className="h-4 w-4" strokeWidth={1.5} />
+                <span className="hidden md:flex">New Case</span>
+              </Button>
+            </div>
+
+            <div className="border rounded-xl overflow-hidden">
+              <Table className="rounded-xl">
+                <TableHeader className="border-b rounded-xl">
+                  <TableRow>
+                    <TableHead className="text-xs text-muted-foreground">
+                      Case Title
+                    </TableHead>
+                    <TableHead className="text-xs text-muted-foreground">
+                      Type
+                    </TableHead>
+                    <TableHead className="text-xs text-muted-foreground">
+                      Status
+                    </TableHead>
+                    <TableHead className="text-xs text-muted-foreground">
+                      Created
+                    </TableHead>
+                    <TableHead className="text-xs text-muted-foreground text-right">
+                      Actions
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {cases === undefined ? (
+                    <TableRow>
+                      <TableCell colSpan={5} className="h-24 text-center">
+                        Loading cases...
+                      </TableCell>
+                    </TableRow>
+                  ) : cases === null ? (
+                    <TableRow>
+                      <TableCell
+                        colSpan={5}
+                        className="h-24 text-center text-red-500"
+                      >
+                        Error loading cases
+                      </TableCell>
+                    </TableRow>
+                  ) : cases.length === 0 ? (
+                    <TableRow>
+                      <TableCell
+                        colSpan={5}
+                        className="h-[250px] text-center cursor-pointer"
+                      >
+                        <div className="flex flex-col items-center justify-center h-full space-y-2">
+                          <h2 className="text-xl font-semibold">
+                            Start Your Case Timeline Journey
+                          </h2>
+                          <p className="text-gray-500 max-w-md text-center">
+                            Create a new timeline to organize and visualize your
+                            case events.
+                          </p>
+                          <Button
+                            onClick={() => router.push("/dashboard/newcase")}
+                            className="mt-4 bg-black text-white hover:bg-gray-800 flex items-center gap-2"
+                          >
+                            <BriefcaseBusiness
+                              className="h-4 w-4"
+                              strokeWidth={1.5}
+                            />
+                            <span>New Case</span>
+                          </Button>
                         </div>
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    cases.map((caseItem) => (
+                      <TableRow
+                        key={caseItem._id}
+                        className="cursor-pointer transition-colors"
+                        onClick={() => router.push(`/dashboard/cases/${caseItem._id}`)}
+                      >
+                        <TableCell className="font-medium">
+                          {caseItem.caseName}
+                        </TableCell>
+                        <TableCell>{caseItem.caseType}</TableCell>
+                        <TableCell>
+                          <span
+                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${caseItem.status === "pending" ? "bg-yellow-100 text-yellow-800" : "bg-green-100 text-green-800"}`}
+                          >
+                            {caseItem.status}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          {new Date(caseItem.createdAt).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Button variant="ghost" size="sm">
+                            View
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
 
-                        <div className="border rounded-xl overflow-hidden">
-                            <Table className=" rounded-xl">
-                                <TableHeader className="border-b rounded-xl">
-                                    <TableRow>
-                                        <TableHead className="text-xs text-muted-foreground">
-                                            Case Title
-                                        </TableHead>
-                                        <TableHead className="text-xs text-muted-foreground">
-                                            Status
-                                        </TableHead>
-                                        <TableHead className="text-xs text-muted-foreground">
-                                            Files
-                                        </TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell onClick={() => router.push("/dashboard/newcase")} colSpan={3} className="h-[250px] text-center cursor-pointer">
-                                            <div className="flex flex-col items-center justify-center h-full space-y-2">
-                                                <h2 className="text-xl font-semibold">Start Your Case Timeline Journey</h2>
-                                                <p className="text-gray-500 max-w-md text-center">
-                                                    Create a new timeline to organize and visualize your case events.
-                                                </p>
-                                                <Button className="mt-4 bg-black text-white hover:bg-gray-800 flex items-center gap-2">
-                                                    <BriefcaseBusiness className="h-4 w-4" strokeWidth={1.5} />
-                                                    <span>
-                                                        New Case
-                                                    </span>
-                                                </Button>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </div>
-
-                        {/* <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
+            {/* <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
                                 <div>0 of 0 row(s) selected.</div>
                                 <div className="flex items-center gap-4">
                                     <div className="flex items-center gap-2">
@@ -107,17 +179,16 @@ const CasesDashboard = () => {
                                     </div>
                                 </div>
                             </div> */}
-                    </div>
+          </div>
 
-                    {/* <div className="text-center text-sm text-gray-500">
+          {/* <div className="text-center text-sm text-gray-500">
                             <p>Note: Your data is secure and will not be used for model training.</p>
                             <p>It can be removed at any time upon request or once the job is complete.</p>
                         </div> */}
-                </div>
-            </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default CasesDashboard
-
+export default CasesDashboard;

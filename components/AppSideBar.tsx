@@ -56,7 +56,7 @@ export function AppSidebar() {
     }
 
     return (
-        <Sidebar collapsible="icon" className="bg-sidebar">
+        <Sidebar collapsible="icon" className="bg-sidebar z-30">
             <SidebarHeader>
                 <Image src={"/AJ_logo.png"} className="w-24" alt="" width={200} height={200} />
             </SidebarHeader>
